@@ -34,3 +34,10 @@ class QuizSerializer(serializers.ModelSerializer):
             Answer.objects.create(quiz=quiz, **answer_data)
 
         return quiz
+
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.category = validated_data.get('category', instance.category)
+        instance.save()
+        return instance
+
