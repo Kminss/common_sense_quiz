@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from rest_framework_simplejwt.views import TokenRefreshView
+from users import views as userViews
+
+router = routers.DefaultRouter()
+router.register('', userViews.UserViewset)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(router.urls)),
     path('api/v1/', include('quiz.urls')),
+    path('token/refresh/', TokenRefreshView.as_view())  # POST {refresh : str} => {access : str}
+
 ]
